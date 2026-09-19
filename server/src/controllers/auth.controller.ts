@@ -4,12 +4,39 @@ import bcrypt from "bcrypt";
 import User from "../models/User.js";
 import config from "../config/envConfig.js";
 
-export const LoginUser = (req: Request, res: Response) => {
-    if (req.body.username === "avrit") {
-        console.log("logging in...");
-        res.status(200).send({ message: "login success" });
-    } else {
-        res.status(404).send({ message: "you are not avrit" });
+export const LoginUser = async (req: Request, res: Response) => {
+    try {
+        const { username, password } = req.body;
+        const userExists = await User.findOne({ username: username });
+        if (!userExists) {
+            return res
+                .status(404)
+                .send({ message: "username not found!", success: false });
+        }
+
+        const pass = await bcrypt.compare(password, userExists.password);
+        if (!pass) {
+            return res
+                .status(400)
+                .send({ message: "Invalid Credentials!", success: false });
+        }
+
+        const { password: passwd, ...userInfo } = userExists.toObject();
+
+        const token = jwt.sign(
+            { role: userInfo.role, id: userInfo._id },
+            config.jwt_secret,
+        );
+
+        return res
+            .status(200)
+            .send({ message: "Login success", token, success: true });
+    } catch (error) {
+        return res.status(500).send({
+            error,
+            message: "Internal server Error!",
+            success: false,
+        });
     }
 };
 
@@ -53,10 +80,11 @@ export const SignUpUser = async (req: Request, res: Response) => {
                 .status(400)
                 .send({ message: error.message, success: false });
         } else if (error instanceof Error) {
-            res.status(500).send({ message: error.message, success: false });
-            return;
+            return res
+                .status(500)
+                .send({ message: error.message, success: false });
         } else {
-            res.status(500).send({
+            return res.status(500).send({
                 message: "Internal server Error!",
                 success: false,
             });
