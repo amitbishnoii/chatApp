@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 interface UserShape extends mongoose.Document {
     firstName: string;
     lastName: string;
+    bio: string;
     username: string;
     password: string;
     birthday: string;
@@ -11,8 +12,9 @@ interface UserShape extends mongoose.Document {
 }
 
 const userSchema = new mongoose.Schema<UserShape>({
-    firstName: { type: String, trim: true },
+    firstName: { type: String, trim: true, required: true },
     lastName: { type: String, trim: true },
+    bio: { type: String, trim: true },
     username: { type: String, required: true, trim: true, unique: true },
     password: { type: String, required: true, trim: true },
     birthday: { type: String, required: true },

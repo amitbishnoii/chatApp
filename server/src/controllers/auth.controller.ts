@@ -24,13 +24,17 @@ export const LoginUser = async (req: Request, res: Response) => {
         const { password: passwd, ...userInfo } = userExists.toObject();
 
         const token = jwt.sign(
-            { role: userInfo.role, id: userInfo._id },
+            {
+                role: userInfo.role,
+                id: userInfo._id,
+                username: userInfo.username,
+            },
             config.jwt_secret,
         );
 
         return res
             .status(200)
-            .send({ message: "Login success", token, success: true });
+            .send({ message: "Login success", token, userInfo, success: true });
     } catch (error) {
         return res.status(500).send({
             error,
@@ -67,7 +71,11 @@ export const SignUpUser = async (req: Request, res: Response) => {
         const { password: passwd, ...userInfo } = user.toObject();
 
         const token = jwt.sign(
-            { role: userInfo.role, id: userInfo._id },
+            {
+                role: userInfo.role,
+                id: userInfo._id,
+                username: userInfo.username,
+            },
             config.jwt_secret,
         );
 
