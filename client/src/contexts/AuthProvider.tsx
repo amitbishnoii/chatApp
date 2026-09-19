@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 type loginData = {
     role: "admin" | "user";
     accessToken: string;
+    username: string;
     id: string;
 };
 
@@ -17,8 +18,14 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             const accessToken = localStorage.getItem("token");
             const id = localStorage.getItem("ID");
             const role = localStorage.getItem("role");
-            if (accessToken && id && role) {
-                setUser({ accessToken, id, role: role as loginData["role"] });
+            const username = localStorage.getItem("username");
+            if (accessToken && id && role && username) {
+                setUser({
+                    accessToken,
+                    id,
+                    role: role as loginData["role"],
+                    username,
+                });
             }
             setIsLoading(false);
         };
@@ -27,12 +34,14 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     const login = (user: loginData) => {
         localStorage.setItem("token", user.accessToken);
+        localStorage.setItem("username", user.username);
         localStorage.setItem("role", user.role);
         localStorage.setItem("ID", user.id);
         setUser(user);
     };
     const logout = () => {
         localStorage.removeItem("token");
+        localStorage.removeItem("username");
         localStorage.removeItem("ID");
         localStorage.removeItem("role");
         setUser(null);

@@ -23,7 +23,12 @@ const Login = () => {
             setError(loginRes.message);
             return;
         }
-        console.log(loginRes);
+        login({
+            role: loginRes.userInfo.role,
+            accessToken: loginRes.token,
+            id: loginRes.userInfo._id,
+            username: loginRes.userInfo.username,
+        });
     };
 
     return (

@@ -3,6 +3,7 @@ import { createContext } from "react";
 interface User {
     id: string;
     accessToken: string;
+    username: string;
     role: "admin" | "user";
 }
 

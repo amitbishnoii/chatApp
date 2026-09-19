@@ -47,15 +47,12 @@ const SignUp = () => {
                             minute.
                         </p>
                     </div>
-
-                    {/* Form Card */}
                     <div className="rounded-3xl border border-[#262626] bg-[#131314] p-6 sm:p-8">
                         <form
                             onSubmit={handleSubmit(handleForm)}
                             noValidate
                             className="space-y-6"
                         >
-                            {/* Username */}
                             <div>
                                 <label
                                     htmlFor="username"
@@ -93,8 +90,6 @@ const SignUp = () => {
                                     </p>
                                 )}
                             </div>
-
-                            {/* First + Last Name */}
                             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                                 <div>
                                     <label
@@ -178,8 +173,6 @@ const SignUp = () => {
                                     )}
                                 </div>
                             </div>
-
-                            {/* Password */}
                             <div>
                                 <label
                                     htmlFor="password"
@@ -222,8 +215,6 @@ const SignUp = () => {
                                     </p>
                                 )}
                             </div>
-
-                            {/* Birthday */}
                             <div>
                                 <label
                                     htmlFor="birthday"
@@ -261,15 +252,11 @@ const SignUp = () => {
                                     </p>
                                 )}
                             </div>
-
-                            {/* Server Error */}
                             {error && (
                                 <div className="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400">
                                     {error}
                                 </div>
                             )}
-
-                            {/* Submit */}
                             <button
                                 type="submit"
                                 disabled={isSubmitting}
@@ -306,8 +293,6 @@ const SignUp = () => {
                             </button>
                         </form>
                     </div>
-
-                    {/* Footer */}
                     <div className="mt-8 flex items-center gap-3">
                         <div className="h-px flex-1 bg-[#22222b]" />
 
