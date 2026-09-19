@@ -5,6 +5,17 @@ const authApi = axios.create({
     baseURL: `http://localhost:3000/api/auth`,
 });
 
+const handleError = (error: unknown) => {
+    if (axios.isAxiosError(error) && error.response) {
+        return error.response.data;
+    } else if (axios.isAxiosError(error) && error.request) {
+        return "Network Error, try again later";
+    } else {
+        console.log("error: ", error);
+        return "Unknown Error!";
+    }
+};
+
 export const LoginService = async (data: {
     username: string;
     password: string;
@@ -13,23 +24,15 @@ export const LoginService = async (data: {
         const response = await authApi.post("/login", data);
         return response.data;
     } catch (error) {
-        if (axios.isAxiosError(error) && error.response) {
-            return error.response.data;
-        } else {
-            return "Network Issue, Try again later!";
-        }
+        return handleError(error);
     }
 };
 
 export const SignUpService = async (data: SignUpForm) => {
     try {
         const response = await authApi.post("/signup", data);
-        console.log("response: ", response);
+        return response.data;
     } catch (error) {
-        if (axios.isAxiosError(error) && error.response) {
-            return error.response.data;
-        } else {
-            return "Network Error, try again later";
-        }
+        return handleError(error);
     }
 };
