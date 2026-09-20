@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { SignUpService } from "../services/authService";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 export interface SignUpForm {
     firstName: string;
@@ -21,6 +22,7 @@ const SignUp = () => {
     } = useForm<SignUpForm>();
     const [error, setError] = useState<string>();
     const navigate = useNavigate();
+    const { login } = useAuth();
 
     const handleForm = async (data: SignUpForm) => {
         const res = await SignUpService(data);
@@ -28,7 +30,13 @@ const SignUp = () => {
             setError(res.message);
             return;
         }
-        navigate("/setup-account");
+        login({
+            role: res.userInfo.role,
+            accessToken: res.token,
+            id: res.userInfo._id,
+            username: res.userInfo.username,
+        });
+        navigate("/setup");
     };
 
     return (

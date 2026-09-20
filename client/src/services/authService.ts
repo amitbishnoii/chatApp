@@ -5,7 +5,7 @@ const authApi = axios.create({
     baseURL: `http://localhost:3000/api/auth`,
 });
 
-const handleError = (error: unknown) => {
+export const handleError = (error: unknown) => {
     if (axios.isAxiosError(error) && error.response) {
         return error.response.data;
     } else if (axios.isAxiosError(error) && error.request) {

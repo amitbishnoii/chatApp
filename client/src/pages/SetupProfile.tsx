@@ -5,6 +5,7 @@ const SetupProfile = () => {
     const [bio, setBio] = useState<string>("");
     const [profilePicture, setProfilePicture] = useState<File | null>(null);
     const [preview, setPreview] = useState<string | null>(null);
+    const [loading, setLoading] = useState<boolean>(false);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (!e.target.files) {
@@ -21,7 +22,13 @@ const SetupProfile = () => {
         const payload = new FormData();
         payload.append("profilePicture", profilePicture!);
         payload.append("bio", bio);
-        const setupRes = await setupService(payload);
+        setLoading(true);
+        const setupRes = await setupService(
+            payload,
+            localStorage.getItem("token")!,
+        );
+        setLoading(false);
+        console.log(setupRes);
     };
 
     return (
@@ -85,8 +92,6 @@ const SetupProfile = () => {
                             </span>
                         </span>
                     </label>
-
-                    {/* Bio */}
                     <div>
                         <label
                             htmlFor="bio"
@@ -106,9 +111,10 @@ const SetupProfile = () => {
 
                     <button
                         onClick={handleSubmit}
-                        className="flex h-12 w-full items-center justify-center rounded-xl bg-[#ff6a1a] px-4 text-sm font-semibold text-[#0d0c0b] transition hover:bg-[#ff8140] active:translate-y-px focus:outline-none focus-visible:ring-4 focus-visible:ring-[#ff6a1a]/30"
+                        disabled={loading}
+                        className={`flex h-12 w-full items-center justify-center rounded-xl px-4 text-sm font-semibold text-[#0d0c0b] transition active:translate-y-px focus:outline-none focus-visible:ring-4 focus-visible:ring-[#ff6a1a]/30 ${loading ? " bg-[#9c3f0c] cursor-not-allowed" : " bg-[#ff6a1a] hover:bg-[#ff8140]"}`}
                     >
-                        Finish Setup
+                        {loading ? "Please wait..." : "Create Profile"}
                     </button>
                 </div>
             </div>
