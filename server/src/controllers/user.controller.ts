@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import { writeFileSync } from "fs";
-import path, { dirname } from "path";
+import path from "path";
 import { fileURLToPath } from "url";
 import { uploadToCloudinary } from "../config/cloudinary.js";
 import User from "../models/User.js";
@@ -32,14 +32,15 @@ export const setupProfile = async (req: Request, res: Response) => {
                 .send({ message: "User not authenticated!", success: false });
         }
         const userInfo = await User.findByIdAndUpdate(
-            req.user._id,
+            req.user.id,
             {
                 $set: { profilePicture: url, bio: bio },
             },
-            { runValidators: true, new: true },
+            { runValidators: true, returnDocument: "after" },
         ).select("-password -birthday");
         return res.send({ user: userInfo, success: true });
     } catch (error) {
+        console.log("error thrown by setupProfile: ", error);
         if (error instanceof Error && error.name === "ValidationError") {
             return res
                 .status(400)
