@@ -40,22 +40,32 @@ const SignUp = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#0b0b0c] px-5 py-10 text-white">
-            <div className="mx-auto flex min-h-[calc(100vh-5rem)] max-w-2xl items-center justify-center">
+        <div className="relative min-h-screen overflow-hidden bg-[#070a14] px-5 py-10 text-white">
+            <div className="pointer-events-none absolute -left-32 -top-32 h-96 w-96 rounded-full bg-violet-600/20 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-40 -right-32 h-96 w-96 rounded-full bg-cyan-400/10 blur-3xl" />
+
+            <div className="relative mx-auto flex min-h-[calc(100vh-5rem)] max-w-2xl items-center justify-center">
                 <div className="w-full">
                     <div className="mb-10">
+                        <h2
+                            className={`mb-6 text-4xl font-bold tracking-tight text-white ${fontHeading}`}
+                        >
+                            Chat<span className="text-violet-400">.AI</span>
+                        </h2>
+
                         <h1
-                            className={`text-4xl font-bold tracking-tight text-[#f5f5f4] sm:text-5xl ${fontHeading}`}
+                            className={`text-5xl font-bold tracking-tight text-[#f5f7ff] sm:text-6xl ${fontHeading}`}
                         >
                             Create your account
                         </h1>
 
-                        <p className="mt-3 text-sm leading-6 text-[#777783]">
-                            Set up your account and get started in just a
-                            minute.
+                        <p className="mt-3 text-sm leading-6 text-[#8b93aa]">
+                            Set up your account and start having intelligent
+                            conversations.
                         </p>
                     </div>
-                    <div className="rounded-3xl border border-[#262626] bg-[#131314] p-6 sm:p-8">
+
+                    <div className="rounded-3xl border border-white/[0.09] bg-white/[0.045] p-6 shadow-2xl shadow-black/40 backdrop-blur-xl sm:p-8">
                         <form
                             onSubmit={handleSubmit(handleForm)}
                             noValidate
@@ -79,10 +89,10 @@ const SignUp = () => {
                                             ? "username-error"
                                             : undefined
                                     }
-                                    className={`h-13 w-full rounded-xl border bg-[#1b1b1c] px-4 text-sm text-[#f5f5f4] outline-none transition placeholder:text-[#6b6b6b] focus:bg-[#1e1e1f] focus:ring-4 ${
+                                    className={`h-13 w-full rounded-xl border bg-[#11192b] px-4 text-sm text-[#f5f7ff] outline-none transition placeholder:text-[#68738f] focus:bg-[#151f35] focus:ring-4 ${
                                         errors.username
                                             ? "border-red-500/60 focus:border-red-400 focus:ring-red-500/10"
-                                            : "border-[#2a2a2b] focus:border-[#ff6a1a] focus:ring-[#ff6a1a]/10"
+                                            : "border-[#273452] focus:border-violet-400 focus:ring-violet-400/15"
                                     }`}
                                     {...register("username", {
                                         required: "Username must be provided!",
@@ -117,10 +127,10 @@ const SignUp = () => {
                                                 ? "firstName-error"
                                                 : undefined
                                         }
-                                        className={`h-13 w-full rounded-xl border bg-[#1b1b1c] px-4 text-sm text-[#f5f5f4] outline-none transition placeholder:text-[#6b6b6b] focus:bg-[#1e1e1f] focus:ring-4 ${
+                                        className={`h-13 w-full rounded-xl border bg-[#11192b] px-4 text-sm text-[#f5f7ff] outline-none transition placeholder:text-[#68738f] focus:bg-[#151f35] focus:ring-4 ${
                                             errors.firstName
                                                 ? "border-red-500/60 focus:border-red-400 focus:ring-red-500/10"
-                                                : "border-[#2a2a2b] focus:border-[#ff6a1a] focus:ring-[#ff6a1a]/10"
+                                                : "border-[#273452] focus:border-violet-400 focus:ring-violet-400/15"
                                         }`}
                                         {...register("firstName", {
                                             required: "Name is required!",
@@ -163,10 +173,10 @@ const SignUp = () => {
                                                 ? "lastName-error"
                                                 : undefined
                                         }
-                                        className={`h-13 w-full rounded-xl border bg-[#1b1b1c] px-4 text-sm text-[#f5f5f4] outline-none transition placeholder:text-[#6b6b6b] focus:bg-[#1e1e1f] focus:ring-4 ${
+                                        className={`h-13 w-full rounded-xl border bg-[#11192b] px-4 text-sm text-[#f5f7ff] outline-none transition placeholder:text-[#68738f] focus:bg-[#151f35] focus:ring-4 ${
                                             errors.lastName
                                                 ? "border-red-500/60 focus:border-red-400 focus:ring-red-500/10"
-                                                : "border-[#2a2a2b] focus:border-[#ff6a1a] focus:ring-[#ff6a1a]/10"
+                                                : "border-[#273452] focus:border-violet-400 focus:ring-violet-400/15"
                                         }`}
                                         {...register("lastName")}
                                     />
@@ -199,10 +209,10 @@ const SignUp = () => {
                                             ? "password-error"
                                             : undefined
                                     }
-                                    className={`h-13 w-full rounded-xl border bg-[#1b1b1c] px-4 text-sm text-[#f5f5f4] outline-none transition placeholder:text-[#6b6b6b] focus:bg-[#1e1e1f] focus:ring-4 ${
+                                    className={`h-13 w-full rounded-xl border bg-[#11192b] px-4 text-sm text-[#f5f7ff] outline-none transition placeholder:text-[#68738f] focus:bg-[#151f35] focus:ring-4 ${
                                         errors.password
                                             ? "border-red-500/60 focus:border-red-400 focus:ring-red-500/10"
-                                            : "border-[#2a2a2b] focus:border-[#ff6a1a] focus:ring-[#ff6a1a]/10"
+                                            : "border-[#273452] focus:border-violet-400 focus:ring-violet-400/15"
                                     }`}
                                     {...register("password", {
                                         required: "Password is required.",
@@ -240,7 +250,7 @@ const SignUp = () => {
                                             ? "birthday-error"
                                             : undefined
                                     }
-                                    className={`h-13 w-full rounded-xl border bg-[#1b1b1c] px-4 text-sm text-[#f5f5f4] outline-none transition scheme-dark focus:bg-[#1e1e1f] focus:ring-4 ${
+                                    className={`h-13 w-full rounded-xl border bg-[#11192b] px-4 text-sm text-[#f5f7ff] outline-none transition scheme-dark focus:bg-[#1e1e1f] focus:ring-4 ${
                                         errors.birthday
                                             ? "border-red-500/60 focus:border-red-400 focus:ring-red-500/10"
                                             : "border-[#2a2a2b] focus:border-[#ff6a1a] focus:ring-[#ff6a1a]/10"
@@ -268,7 +278,7 @@ const SignUp = () => {
                             <button
                                 type="submit"
                                 disabled={isSubmitting}
-                                className="flex h-13 w-full items-center justify-center gap-2 rounded-xl bg-[#ff6a1a] px-4 text-sm font-semibold text-[#0b0b0c] transition hover:bg-[#ff8140] active:scale-[0.99] focus:outline-none focus-visible:ring-4 focus-visible:ring-[#ff6a1a]/20 disabled:cursor-not-allowed disabled:opacity-60"
+                                className="flex h-13 w-full items-center justify-center gap-2 rounded-xl bg-violet-500 px-4 text-sm font-semibold text-white shadow-lg shadow-violet-500/20 transition hover:bg-violet-400 active:scale-[0.99] focus:outline-none focus-visible:ring-4 focus-visible:ring-violet-400/25 disabled:cursor-not-allowed disabled:opacity-60"
                             >
                                 {isSubmitting && (
                                     <svg
@@ -301,14 +311,13 @@ const SignUp = () => {
                             </button>
                         </form>
                     </div>
+
                     <div className="mt-8 flex items-center gap-3">
-                        <div className="h-px flex-1 bg-[#22222b]" />
-
-                        <span className="text-xs text-[#555560]">
-                            Create your account
+                        <div className="h-px flex-1 bg-white/[0.08]" />
+                        <span className="text-xs text-[#68738f]">
+                            Secure and powered by AI
                         </span>
-
-                        <div className="h-px flex-1 bg-[#22222b]" />
+                        <div className="h-px flex-1 bg-white/[0.08]" />
                     </div>
                 </div>
             </div>
