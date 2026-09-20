@@ -1,5 +1,4 @@
 import type { Request, Response } from "express";
-import { writeFileSync } from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { uploadToCloudinary } from "../config/cloudinary.js";
@@ -16,16 +15,7 @@ export const setupProfile = async (req: Request, res: Response) => {
                 .status(404)
                 .send({ message: "no file found", success: false });
         }
-        const filePath = path.join(
-            __dirname,
-            "../../upload",
-            req.file?.originalname,
-        );
-        writeFileSync(
-            path.join(__dirname, "../../upload", req.file.originalname),
-            req.file.buffer,
-        );
-        const url = await uploadToCloudinary(filePath);
+        const url = await uploadToCloudinary(req.file.buffer);
         if (!req.user) {
             return res
                 .status(401)
@@ -40,7 +30,6 @@ export const setupProfile = async (req: Request, res: Response) => {
         ).select("-password -birthday");
         return res.send({ user: userInfo, success: true });
     } catch (error) {
-        console.log("error thrown by setupProfile: ", error);
         if (error instanceof Error && error.name === "ValidationError") {
             return res
                 .status(400)

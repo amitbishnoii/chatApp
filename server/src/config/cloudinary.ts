@@ -7,9 +7,19 @@ cloudinary.config({
     api_secret: config.cloudinary_api_secret,
 });
 
-export const uploadToCloudinary = async (file: string) => {
-    const result = await cloudinary.uploader.upload(file);
-    return result.secure_url;
+export const uploadToCloudinary = (fileBuffer: Buffer): Promise<string> => {
+    return new Promise<string>((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+            { folder: "profile-pictures" },
+            (error, result) => {
+                if (error || !result) {
+                    return reject(error);
+                }
+                resolve(result.secure_url);
+            },
+        );
+        stream.end(fileBuffer);
+    });
 };
 
 export default cloudinary;
