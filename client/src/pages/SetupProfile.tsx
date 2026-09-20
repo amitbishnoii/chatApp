@@ -26,7 +26,7 @@ const SetupProfile = () => {
 
     return (
         <div className="flex items-center justify-center bg-[#0d0c0b] px-5 py-10 sm:px-10 lg:px-14">
-            <div className="w-full max-w-lg rounded-[2rem] border border-[#2b2926] bg-[#161513] p-7 sm:p-10">
+            <div className="w-full max-w-lg rounded-4xl border border-[#2b2926] bg-[#161513] p-7 sm:p-10">
                 <h1 className="text-3xl font-semibold tracking-tight text-[#f2ede4] sm:text-4xl">
                     Set up your profile
                 </h1>
