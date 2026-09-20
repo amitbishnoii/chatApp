@@ -9,7 +9,7 @@ interface DecodedUser extends JwtPayload {
 declare global {
     namespace Express {
         interface Request {
-            user: DecodedUser | string;
+            user?: DecodedUser;
         }
     }
 }
