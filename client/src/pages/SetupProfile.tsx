@@ -32,90 +32,125 @@ const SetupProfile = () => {
     };
 
     return (
-        <div className="flex items-center justify-center bg-[#0d0c0b] px-5 py-10 sm:px-10 lg:px-14">
-            <div className="w-full max-w-lg rounded-4xl border border-[#2b2926] bg-[#161513] p-7 sm:p-10">
-                <h1 className="text-3xl font-semibold tracking-tight text-[#f2ede4] sm:text-4xl">
-                    Set up your profile
-                </h1>
-                <p className="mt-3 text-[15px] leading-relaxed text-[#8c877e]">
-                    Add a photo and a short bio so people know who you are.
-                </p>
+        <div className="relative min-h-screen overflow-hidden bg-[#070a14] px-5 py-10 text-white sm:px-8 lg:px-10">
+            <div className="pointer-events-none absolute -left-24 top-10 h-72 w-72 rounded-full bg-violet-500/20 blur-3xl" />
+            <div className="pointer-events-none absolute -right-20 bottom-14 h-80 w-80 rounded-full bg-cyan-400/10 blur-3xl" />
 
-                <div className="mt-9 space-y-8">
-                    {/* Photo */}
-                    <label
-                        htmlFor="picture"
-                        className="group flex cursor-pointer items-center gap-5"
-                    >
-                        <input
-                            id="picture"
-                            type="file"
-                            accept="image/*"
-                            onChange={handleFileChange}
-                            className="peer sr-only"
-                        />
+            <div className="relative mx-auto flex min-h-[calc(100vh-5rem)] max-w-5xl items-center justify-center">
+                <div className="grid w-full overflow-hidden rounded-4xl border border-white/10 bg-white/5 shadow-[0_30px_80px_rgba(0,0,0,0.45)] backdrop-blur-xl lg:grid-cols-[0.92fr_1.08fr]">
+                    <aside className="border-b border-white/10 bg-[radial-gradient(circle_at_top,rgba(139,92,246,0.35),rgba(10,14,26,0.6)_55%)] p-6 sm:p-8 lg:border-r lg:border-b-0">
+                        <div className="mb-8 flex items-center gap-3">
+                            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-violet-500/20 text-lg font-bold text-violet-300">
+                                C
+                            </div>
+                            <div>
+                                <p className="text-xs uppercase tracking-[0.22em] text-violet-200/75">
+                                    Chat AI
+                                </p>
+                                <p className="text-sm text-slate-300">
+                                    Profile setup
+                                </p>
+                            </div>
+                        </div>
 
-                        <span
-                            className={`relative flex h-28 w-28 shrink-0 items-center justify-center overflow-hidden rounded-[1.75rem] border-2 transition-all duration-200 peer-focus-visible:ring-4 peer-focus-visible:ring-[#ff6a1a]/40 ${
-                                preview
-                                    ? "border-transparent shadow-[6px_6px_0_0_#ff6a1a]"
-                                    : "border-dashed border-[#3a3733] bg-[#1d1c1a] group-hover:border-[#ff6a1a]"
-                            }`}
-                        >
-                            {preview ? (
-                                <img
-                                    src={preview}
-                                    alt="Profile preview"
-                                    className="h-full w-full object-cover"
-                                />
-                            ) : (
-                                <svg
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="1.75"
-                                    strokeLinecap="round"
-                                    className="h-7 w-7 text-[#8c877e] transition-colors group-hover:text-[#ff6a1a]"
-                                    aria-hidden="true"
+                        <div className="flex h-full min-h-90 flex-col justify-center rounded-[28px] border border-white/10 bg-[#0f172a]/70 p-4 shadow-inner shadow-violet-500/10">
+                            <div className="mb-4 flex items-center justify-between">
+                                <span className="text-xs font-medium uppercase tracking-[0.22em] text-violet-200/80">
+                                    Preview
+                                </span>
+                                <span className="rounded-full border border-emerald-400/30 bg-emerald-500/10 px-2 py-1 text-[10px] font-medium uppercase tracking-[0.16em] text-emerald-300">
+                                    Live
+                                </span>
+                            </div>
+
+                            <div className="relative mx-auto h-62.5 w-full max-w-70 overflow-hidden rounded-[26px] border border-violet-400/40 bg-slate-900 shadow-[0_20px_50px_rgba(139,92,246,0.28)]">
+                                {preview ? (
+                                    <img
+                                        src={preview}
+                                        alt="Profile preview"
+                                        className="h-full w-full object-cover"
+                                    />
+                                ) : (
+                                    <div className="flex h-full w-full flex-col items-center justify-center gap-3 bg-[linear-gradient(135deg,rgba(139,92,246,0.25),rgba(15,23,42,0.9))] text-violet-200">
+                                        <span className="text-xs uppercase tracking-[0.2em] text-violet-100/80">
+                                            Upload photo to see Preview
+                                        </span>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </aside>
+
+                    <main className="p-6 sm:p-8 lg:p-10">
+                        <div className="mb-8">
+                            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
+                                Set up your profile
+                            </h1>
+                            <p className="mt-3 max-w-lg text-[15px] leading-7 text-slate-300">
+                                Add a profile photo and a short bio so your
+                                friends and conversation partners know who you
+                                are.
+                            </p>
+                        </div>
+
+                        <div className="space-y-6 scrollbar-thin scrollbar-thumb-[#5b5a8a] scrollbar-track-transparent">
+                            <div className="space-y-2">
+                                <label
+                                    htmlFor="bio"
+                                    className="block text-sm font-medium text-slate-200"
                                 >
-                                    <path d="M12 5v14M5 12h14" />
-                                </svg>
-                            )}
-                        </span>
+                                    Bio
+                                </label>
+                                <textarea
+                                    id="bio"
+                                    rows={4}
+                                    placeholder="Tell people a little about yourself..."
+                                    value={bio}
+                                    onChange={(e) => setBio(e.target.value)}
+                                    className="w-full resize-none rounded-2xl border border-white/10 bg-[#0f172a]/70 px-4 py-3 text-[15px] text-white outline-none transition placeholder:text-slate-500 focus:border-violet-400 focus:ring-4 focus:ring-violet-400/10"
+                                />
+                            </div>
 
-                        <span>
-                            <span className="block text-[15px] font-medium text-[#f2ede4]">
-                                {preview ? "Change photo" : "Upload a photo"}
-                            </span>
-                            <span className="mt-0.5 block text-sm text-[#8c877e]">
-                                Square photos work best
-                            </span>
-                        </span>
-                    </label>
-                    <div>
-                        <label
-                            htmlFor="bio"
-                            className="mb-2 block text-sm font-medium text-[#cbc5b9]"
-                        >
-                            Bio
-                        </label>
-                        <input
-                            id="bio"
-                            type="text"
-                            placeholder="Tell people a little about you"
-                            value={bio}
-                            onChange={(e) => setBio(e.target.value)}
-                            className="h-12 w-full rounded-xl border border-[#2b2926] bg-[#1d1c1a] px-4 text-[15px] text-[#f2ede4] outline-none transition placeholder:text-[#5e5a53] focus:border-[#ff6a1a] focus:ring-4 focus:ring-[#ff6a1a]/15"
-                        />
-                    </div>
+                            <div className="rounded-2xl border border-dashed border-violet-400/30 bg-violet-500/5 p-4 text-sm text-slate-300">
+                                <div className="flex items-center justify-between gap-4">
+                                    <div>
+                                        <p className="font-medium text-white">
+                                            {preview
+                                                ? "Image selected"
+                                                : "Add a profile picture"}
+                                        </p>
+                                        <p className="mt-1 text-slate-400">
+                                            PNG, JPG, or WEBP. Square images
+                                            look best.
+                                        </p>
+                                    </div>
+                                    <input
+                                        id="picture"
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={handleFileChange}
+                                        className="peer sr-only"
+                                    />
+                                    <label
+                                        htmlFor="picture"
+                                        className="inline-flex cursor-pointer items-center justify-center rounded-xl border border-violet-400/40 bg-violet-500/10 px-3 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-violet-200 transition hover:bg-violet-500/15"
+                                    >
+                                        {preview ? "Change" : "Upload"}
+                                    </label>
+                                </div>
+                            </div>
 
-                    <button
-                        onClick={handleSubmit}
-                        disabled={loading}
-                        className={`flex h-12 w-full items-center justify-center rounded-xl px-4 text-sm font-semibold text-[#0d0c0b] transition active:translate-y-px focus:outline-none focus-visible:ring-4 focus-visible:ring-[#ff6a1a]/30 ${loading ? " bg-[#9c3f0c] cursor-not-allowed" : " bg-[#ff6a1a] hover:bg-[#ff8140]"}`}
-                    >
-                        {loading ? "Please wait..." : "Create Profile"}
-                    </button>
+                            <button
+                                onClick={handleSubmit}
+                                disabled={loading}
+                                className={`flex h-12 w-full items-center justify-center rounded-xl px-4 text-sm font-semibold text-white transition focus:outline-none focus-visible:ring-4 focus-visible:ring-violet-400/25 ${loading ? "cursor-not-allowed bg-violet-700/60" : "bg-violet-500 shadow-lg shadow-violet-500/25 hover:bg-violet-400"}`}
+                            >
+                                {loading
+                                    ? "Creating profile..."
+                                    : "Create Profile"}
+                            </button>
+                        </div>
+                    </main>
                 </div>
             </div>
         </div>

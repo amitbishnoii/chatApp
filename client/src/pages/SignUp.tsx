@@ -153,8 +153,6 @@ const SignUp = () => {
                                     placeholder="Re-enter your password"
                                     error={errors.confirmPassword}
                                     styles={inputClass}
-                                    showPassword={showPassword.show}
-                                    togglePassword={showPassword.toggle}
                                     registerProps={register("confirmPassword", {
                                         required:
                                             "Please confirm your password.",

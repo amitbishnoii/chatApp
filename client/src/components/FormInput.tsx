@@ -28,7 +28,7 @@ const FormInput = ({
 }: FormInputProps) => {
     return (
         <>
-            {label === "Password" || label === "Confirm Password" ? (
+            {label === "Password" ? (
                 <div>
                     <label
                         htmlFor="firstName"

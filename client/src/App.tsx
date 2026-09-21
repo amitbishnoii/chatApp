@@ -3,6 +3,7 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import AuthProvider from "./contexts/AuthProvider";
 import SetupProfile from "./pages/SetupProfile";
+import FriendPage from "./pages/FriendPage";
 
 const App = () => {
     return (
@@ -12,6 +13,7 @@ const App = () => {
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<SignUp />} />
                     <Route path="/setup" element={<SetupProfile />} />
+                    <Route path="/find-people" element={<FriendPage />} />
                 </Routes>
             </BrowserRouter>
         </AuthProvider>

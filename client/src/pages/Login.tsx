@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { LoginService } from "../services/authService";
 import useAuth from "../hooks/useAuth";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FormInput from "../components/FormInput";
 import { usePasswordToggle } from "../hooks/useTogglePassword";
 
@@ -21,6 +21,7 @@ const Login = () => {
     const [error, setError] = useState<string>();
     const { login } = useAuth();
     const showPassword = usePasswordToggle();
+    const navigate = useNavigate();
 
     const handleForm = async (data: LoginForm) => {
         setError(undefined);
@@ -38,6 +39,7 @@ const Login = () => {
             id: loginRes.userInfo._id,
             username: loginRes.userInfo.username,
         });
+        navigate("/setup");
     };
 
     return (
