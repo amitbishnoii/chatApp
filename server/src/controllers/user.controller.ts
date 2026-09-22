@@ -4,7 +4,6 @@ import { fileURLToPath } from "url";
 import { uploadToCloudinary } from "../config/cloudinary.js";
 import User from "../models/User.js";
 import FriendShip from "../models/Friendship.js";
-import { userInfo } from "os";
 import AppError from "../utils/AppError.js";
 
 const __filename = fileURLToPath(import.meta.url);

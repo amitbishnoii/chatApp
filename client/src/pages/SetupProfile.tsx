@@ -52,8 +52,8 @@ const SetupProfile = () => {
             <div className="pointer-events-none absolute -right-20 bottom-14 h-80 w-80 rounded-full bg-cyan-400/10 blur-3xl" />
 
             <div className="relative mx-auto flex min-h-[calc(100vh-5rem)] max-w-5xl items-center justify-center">
-                <div className="grid w-full overflow-hidden rounded-4xl border border-white/10 bg-white/5 shadow-[0_30px_80px_rgba(0,0,0,0.45)] backdrop-blur-xl lg:grid-cols-[0.92fr_1.08fr]">
-                    <aside className="border-b border-white/10 bg-[radial-gradient(circle_at_top,rgba(139,92,246,0.35),rgba(10,14,26,0.6)_55%)] p-6 sm:p-8 lg:border-r lg:border-b-0">
+                <div className="setup-profile-card grid w-full overflow-hidden rounded-4xl border border-white/10 bg-white/5 shadow-[0_30px_80px_rgba(0,0,0,0.45)] backdrop-blur-xl lg:grid-cols-[0.92fr_1.08fr]">
+                    <aside className="setup-preview-panel border-b border-white/10 bg-[radial-gradient(circle_at_top,rgba(139,92,246,0.35),rgba(10,14,26,0.6)_55%)] p-6 sm:p-8 lg:border-r lg:border-b-0">
                         <div className="mb-8 flex items-center gap-3">
                             <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-violet-500/20 text-lg font-bold text-violet-300">
                                 C
@@ -78,7 +78,7 @@ const SetupProfile = () => {
                                 </span>
                             </div>
 
-                            <div className="relative mx-auto h-62.5 w-full max-w-70 overflow-hidden rounded-[26px] border border-violet-400/40 bg-slate-900 shadow-[0_20px_50px_rgba(139,92,246,0.28)]">
+                            <div className="setup-preview relative mx-auto h-62.5 w-full max-w-70 overflow-hidden rounded-[26px] border border-violet-400/40 bg-slate-900 shadow-[0_20px_50px_rgba(139,92,246,0.28)]">
                                 {preview ? (
                                     <img
                                         src={preview}
@@ -96,7 +96,7 @@ const SetupProfile = () => {
                         </div>
                     </aside>
 
-                    <main className="p-6 sm:p-8 lg:p-10">
+                    <main className="setup-form-panel p-6 sm:p-8 lg:p-10">
                         <div className="mb-8">
                             <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
                                 Set up your profile
