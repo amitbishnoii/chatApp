@@ -4,6 +4,7 @@ import SignUp from "./pages/SignUp";
 import AuthProvider from "./contexts/AuthProvider";
 import SetupProfile from "./pages/SetupProfile";
 import FriendPage from "./pages/FriendPage";
+import ChatPage from "./pages/ChatPage";
 
 const App = () => {
     return (
@@ -14,6 +15,7 @@ const App = () => {
                     <Route path="/signup" element={<SignUp />} />
                     <Route path="/setup" element={<SetupProfile />} />
                     <Route path="/find-people" element={<FriendPage />} />
+                    <Route path="/chat" element={<ChatPage />} />
                 </Routes>
             </BrowserRouter>
         </AuthProvider>
