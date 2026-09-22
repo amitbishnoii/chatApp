@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { setupService } from "../services/userService";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 const SetupProfile = () => {
     const [bio, setBio] = useState<string>("");
@@ -9,6 +10,7 @@ const SetupProfile = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>("");
     const navigate = useNavigate();
+    const { setupPartialData } = useAuth();
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (!e.target.files) {
@@ -32,8 +34,11 @@ const SetupProfile = () => {
         );
         setLoading(false);
         if (setupRes.success) {
-            console.log(setupRes);
-
+            setupPartialData({
+                bio: setupRes.user.bio,
+                firstName: setupRes.user.firstName,
+                lastName: setupRes.user.firstName,
+            });
             navigate("/chat");
         } else {
             setError(setupRes.message);

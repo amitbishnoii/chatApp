@@ -1,19 +1,9 @@
 import type React from "react";
-import { AuthContext } from "./AuthContext";
+import { AuthContext, type User } from "./AuthContext";
 import { useEffect, useState } from "react";
 
-type loginData = {
-    id: string;
-    accessToken: string;
-    username: string;
-    role: "admin" | "user";
-    firstName?: string;
-    lastName?: string;
-    bio?: string;
-};
-
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-    const [user, setUser] = useState<loginData | null>(null);
+    const [user, setUser] = useState<User | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
@@ -26,7 +16,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                 setUser({
                     accessToken,
                     id,
-                    role: role as loginData["role"],
+                    role: role as User["role"],
                     username,
                 });
             }
@@ -35,7 +25,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         checkToken();
     }, []);
 
-    const login = (user: loginData) => {
+    const login = (user: User) => {
         localStorage.setItem("token", user.accessToken);
         localStorage.setItem("username", user.username);
         localStorage.setItem("role", user.role);
@@ -49,9 +39,19 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         localStorage.removeItem("role");
         setUser(null);
     };
+    const setupPartialData = (
+        data: Pick<User, "bio" | "firstName" | "lastName">,
+    ) => {
+        setUser((prev) => {
+            if (!prev) return prev;
+            return { ...prev, ...data };
+        });
+    };
 
     return (
-        <AuthContext.Provider value={{ login, logout, isLoading, user }}>
+        <AuthContext.Provider
+            value={{ login, logout, isLoading, user, setupPartialData }}
+        >
             {children}
         </AuthContext.Provider>
     );
