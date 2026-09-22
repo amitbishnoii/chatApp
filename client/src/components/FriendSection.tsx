@@ -61,11 +61,8 @@ const FriendSection = () => {
                             </p>
                         </div>
                         <h2 className="mt-2 text-2xl font-bold tracking-[-0.03em] text-white">
-                            Your people
+                            Your friends
                         </h2>
-                        <p className="mt-1 text-xs text-slate-500">
-                            Stay close to the people who matter.
-                        </p>
                     </div>
                     <button
                         className="grid size-10 place-items-center rounded-xl border border-white/10 bg-[#17171b] text-xl font-light text-white transition hover:border-[#ff2e55]/50 hover:bg-[#ff2e55] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#ff2e55]/60"

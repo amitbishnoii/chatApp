@@ -21,8 +21,18 @@ export const addFriendService = async (
     accessToken: string,
 ) => {
     try {
-        console.log("sending response with data: ", data);
         const response = await userApi.post("/add-friend", data, {
+            headers: { Authorization: `Bearer ${accessToken}` },
+        });
+        console.log("response: ", response);
+    } catch (error) {
+        return handleError(error);
+    }
+};
+
+export const findUserService = async (username: string, accessToken: string) => {
+    try {
+        const response = await userApi.get(`/u/${username}`, {
             headers: { Authorization: `Bearer ${accessToken}` },
         });
         console.log("response: ", response);
