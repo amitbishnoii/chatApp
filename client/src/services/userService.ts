@@ -15,3 +15,18 @@ export const setupService = async (data: FormData, accessToken: string) => {
         return handleError(error);
     }
 };
+
+export const addFriendService = async (
+    data: { reqSenderId: string; reqReceiverId: string },
+    accessToken: string,
+) => {
+    try {
+        console.log("sending response with data: ", data);
+        const response = await userApi.post("/add-friend", data, {
+            headers: { Authorization: `Bearer ${accessToken}` },
+        });
+        console.log("response: ", response);
+    } catch (error) {
+        return handleError(error);
+    }
+};
