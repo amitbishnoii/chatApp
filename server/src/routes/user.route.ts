@@ -1,5 +1,5 @@
 import express from "express";
-import { setupProfile } from "../controllers/user.controller.js";
+import { addFriend, setupProfile } from "../controllers/user.controller.js";
 import upload from "../middlewares/upload.js";
 import { authMiddleware } from "../middlewares/authMiddleware.js";
 
@@ -11,5 +11,6 @@ userRouter.post(
     upload.single("profilePicture"),
     setupProfile,
 );
+userRouter.post("/add-friend", authMiddleware, addFriend);
 
 export default userRouter;
