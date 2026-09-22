@@ -10,7 +10,6 @@ export const authMiddleware = (
     try {
         const token = req.headers.authorization;
         if (!token || !token.startsWith("Bearer ")) {
-            console.log("token is missing");
             return res
                 .status(401)
                 .send({ message: "Token is missing!", success: false });
