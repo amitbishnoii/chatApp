@@ -3,10 +3,13 @@ import { AuthContext } from "./AuthContext";
 import { useEffect, useState } from "react";
 
 type loginData = {
-    role: "admin" | "user";
+    id: string;
     accessToken: string;
     username: string;
-    id: string;
+    role: "admin" | "user";
+    firstName?: string;
+    lastName?: string;
+    bio?: string;
 };
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {

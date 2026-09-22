@@ -32,6 +32,8 @@ const SetupProfile = () => {
         );
         setLoading(false);
         if (setupRes.success) {
+            console.log(setupRes);
+
             navigate("/chat");
         } else {
             setError(setupRes.message);

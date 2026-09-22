@@ -5,6 +5,9 @@ interface User {
     accessToken: string;
     username: string;
     role: "admin" | "user";
+    firstName: string;
+    lastName: string;
+    bio: string;
 }
 
 interface AuthContext {

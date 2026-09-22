@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { socket } from "../socket/socket";
 import { Navigate } from "react-router-dom";
+import FriendSection from "../components/FriendSection";
+import ChatWindow from "../components/ChatWindow";
 
 const ChatPage = () => {
     const [message, setMessage] = useState<string>("");
@@ -27,8 +29,9 @@ const ChatPage = () => {
     };
 
     return (
-        <div>
-            
+        <div className="fixed inset-0 flex items-center justify-center gap-5 bg-[#170a0d] px-6">
+            <FriendSection />
+            <ChatWindow />
         </div>
     );
 };
