@@ -1,11 +1,11 @@
 import { io, type Socket } from "socket.io-client";
 
 export interface ClientToServerEvents {
-    sendMessage: ( message: string ) => void;
+    sendMessage: (message: string) => void;
 }
 
 export interface ServerToClientEvents {
-    newMessage: () => void;
+    newMessage: (message: string) => void;
 }
 
 export const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(

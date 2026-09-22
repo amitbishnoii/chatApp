@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { setupService } from "../services/userService";
+import { useNavigate } from "react-router-dom";
 
 const SetupProfile = () => {
     const [bio, setBio] = useState<string>("");
     const [profilePicture, setProfilePicture] = useState<File | null>(null);
     const [preview, setPreview] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<string>("");
+    const navigate = useNavigate();
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (!e.target.files) {
@@ -28,7 +31,12 @@ const SetupProfile = () => {
             localStorage.getItem("token")!,
         );
         setLoading(false);
-        console.log(setupRes);
+        if (setupRes.success) {
+            navigate("/chat");
+        } else {
+            setError(setupRes.message);
+            return;
+        }
     };
 
     return (

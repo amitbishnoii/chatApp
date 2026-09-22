@@ -39,7 +39,7 @@ const Login = () => {
             id: loginRes.userInfo._id,
             username: loginRes.userInfo.username,
         });
-        navigate("/setup");
+        navigate("/chat");
     };
 
     return (
