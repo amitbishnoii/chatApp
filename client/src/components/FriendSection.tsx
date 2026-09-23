@@ -1,54 +1,13 @@
 import { PlusIcon, SearchIcon } from "lucide-react";
 
-const friends = [
-    {
-        name: "Maya Chen",
-        message: "That sounds perfect!",
-        time: "2m",
-        color: "bg-rose-500",
-        initials: "MC",
-        online: true,
-        unread: 2,
-    },
-    {
-        name: "Alex Morgan",
-        message: "See you in a bit",
-        time: "18m",
-        color: "bg-cyan-500",
-        initials: "AM",
-        online: true,
-        unread: 0,
-    },
-    {
-        name: "Jordan Lee",
-        message: "Sent a photo",
-        time: "1h",
-        color: "bg-amber-500",
-        initials: "JL",
-        online: false,
-        unread: 0,
-    },
-    {
-        name: "Sam Rivera",
-        message: "Let's catch up soon",
-        time: "3h",
-        color: "bg-violet-500",
-        initials: "SR",
-        online: true,
-        unread: 4,
-    },
-    {
-        name: "Taylor Kim",
-        message: "Thanks for the update",
-        time: "Yesterday",
-        color: "bg-emerald-500",
-        initials: "TK",
-        online: false,
-        unread: 0,
-    },
-];
+export interface FriendShape {
+    username: string;
+    firstName: string;
+    lastName: string;
+    profilePicture: string;
+}
 
-const FriendSection = () => {
+const FriendSection = ({ friends }: { friends: FriendShape[] }) => {
     return (
         <aside className="fixed inset-y-5 left-5 z-10 flex w-[min(22rem,calc(100vw-2.5rem))] flex-col overflow-hidden rounded-[1.75rem] border border-white/10 bg-[#0a0a0c] text-slate-100 shadow-[0_28px_90px_rgba(0,0,0,0.6)]">
             <div className="border-b border-white/10 bg-[#0f0f12] px-5 pb-5 pt-6">
@@ -88,41 +47,21 @@ const FriendSection = () => {
                 </p>
                 {friends.map((friend, index) => (
                     <div
-                        key={friend.name}
+                        key={friend.firstName}
                         className={`group flex cursor-pointer items-center gap-3 rounded-2xl border p-3 transition duration-200 ${
                             index === 0
                                 ? "border-[#ff2e55]/30 bg-[#ff2e55]/10"
                                 : "border-transparent hover:border-white/10 hover:bg-white/5"
                         }`}
                     >
-                        <div className="relative shrink-0">
-                            <div
-                                className={`grid size-11 place-items-center rounded-full ${friend.color} text-xs font-bold text-white ring-4 ring-[#0a0a0c]`}
-                            >
-                                {friend.initials}
-                            </div>
-                            {friend.online && (
-                                <span className="absolute bottom-0 right-0 size-3 rounded-full border-2 border-[#0a0a0c] bg-[#39ff88]" />
-                            )}
-                        </div>
                         <div className="min-w-0 flex-1">
                             <div className="flex items-center justify-between gap-2">
                                 <p className="truncate text-[13px] font-semibold text-slate-100">
-                                    {friend.name}
+                                    {friend.firstName} {friend.lastName}
                                 </p>
                                 <span className="shrink-0 text-[10px] font-medium text-slate-500">
-                                    {friend.time}
+                                    2 hours ago
                                 </span>
-                            </div>
-                            <div className="mt-1.5 flex items-center justify-between gap-2">
-                                <p className="truncate text-xs text-slate-400 transition group-hover:text-slate-300">
-                                    {friend.message}
-                                </p>
-                                {friend.unread > 0 && (
-                                    <span className="grid size-5 shrink-0 place-items-center rounded-full bg-[#ff2e55] text-[10px] font-bold text-white">
-                                        {friend.unread}
-                                    </span>
-                                )}
                             </div>
                         </div>
                     </div>

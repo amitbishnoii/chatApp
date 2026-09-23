@@ -52,8 +52,8 @@ const SetupProfile = () => {
             <div className="pointer-events-none absolute -right-20 bottom-14 h-80 w-80 rounded-full bg-cyan-400/10 blur-3xl" />
 
             <div className="relative mx-auto flex min-h-[calc(100vh-5rem)] max-w-5xl items-center justify-center">
-                <div className="setup-profile-card grid w-full overflow-hidden rounded-4xl border border-white/10 bg-white/5 shadow-[0_30px_80px_rgba(0,0,0,0.45)] backdrop-blur-xl lg:grid-cols-[0.92fr_1.08fr]">
-                    <aside className="setup-preview-panel border-b border-white/10 bg-[radial-gradient(circle_at_top,rgba(139,92,246,0.35),rgba(10,14,26,0.6)_55%)] p-6 sm:p-8 lg:border-r lg:border-b-0">
+                <div className="animate-[setup-card-in_700ms_cubic-bezier(.22,1,.36,1)_both] grid w-full overflow-hidden rounded-4xl border border-white/10 bg-white/5 shadow-[0_30px_80px_rgba(0,0,0,0.45)] backdrop-blur-xl motion-reduce:animate-none lg:grid-cols-[0.92fr_1.08fr]">
+                    <aside className="animate-[setup-panel-in_650ms_120ms_cubic-bezier(.22,1,.36,1)_both] border-b border-white/10 bg-[radial-gradient(circle_at_top,rgba(139,92,246,0.35),rgba(10,14,26,0.6)_55%)] p-6 motion-reduce:animate-none sm:p-8 lg:border-r lg:border-b-0">
                         <div className="mb-8 flex items-center gap-3">
                             <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-violet-500/20 text-lg font-bold text-violet-300">
                                 C
@@ -78,7 +78,7 @@ const SetupProfile = () => {
                                 </span>
                             </div>
 
-                            <div className="setup-preview relative mx-auto h-62.5 w-full max-w-70 overflow-hidden rounded-[26px] border border-violet-400/40 bg-slate-900 shadow-[0_20px_50px_rgba(139,92,246,0.28)]">
+                            <div className="relative mx-auto h-62.5 w-full max-w-70 overflow-hidden rounded-[26px] border border-violet-400/40 bg-slate-900 shadow-[0_20px_50px_rgba(139,92,246,0.28)]">
                                 {preview ? (
                                     <img
                                         src={preview}
@@ -96,12 +96,12 @@ const SetupProfile = () => {
                         </div>
                     </aside>
 
-                    <main className="setup-form-panel p-6 sm:p-8 lg:p-10">
+                    <main className="animate-[setup-panel-in_650ms_220ms_cubic-bezier(.22,1,.36,1)_both] p-6 motion-reduce:animate-none sm:p-8 lg:p-10">
                         <div className="mb-8">
-                            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
+                            <h1 className="text-[clamp(2.5rem,5vw,3.75rem)] font-semibold leading-[.98] tracking-[-.045em] text-white">
                                 Set up your profile
                             </h1>
-                            <p className="mt-3 max-w-lg text-[15px] leading-7 text-slate-300">
+                            <p className="mt-3 max-w-136 text-[.98rem] leading-[1.7] tracking-[.005em] text-slate-300">
                                 Add a profile photo and a short bio so your
                                 friends and conversation partners know who you
                                 are.
@@ -112,7 +112,7 @@ const SetupProfile = () => {
                             <div className="space-y-2">
                                 <label
                                     htmlFor="bio"
-                                    className="block text-sm font-medium text-slate-200"
+                                    className="block text-sm font-medium tracking-[.08em] text-slate-200"
                                 >
                                     Bio
                                 </label>
@@ -122,7 +122,7 @@ const SetupProfile = () => {
                                     placeholder="Tell people a little about yourself..."
                                     value={bio}
                                     onChange={(e) => setBio(e.target.value)}
-                                    className="w-full resize-none rounded-2xl border border-white/10 bg-[#0f172a]/70 px-4 py-3 text-[15px] text-white outline-none transition placeholder:text-slate-500 focus:border-violet-400 focus:ring-4 focus:ring-violet-400/10"
+                                    className="w-full resize-none rounded-2xl border border-white/10 bg-[#0f172a]/70 px-4 py-3 text-[.95rem] leading-[1.65] tracking-[.005em] text-white outline-none transition placeholder:text-slate-500 focus:border-violet-400 focus:ring-4 focus:ring-violet-400/10"
                                 />
                             </div>
 
