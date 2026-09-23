@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-interface UserShape extends mongoose.Document {
+interface UserShape {
     firstName: string;
     lastName: string;
     bio: string;

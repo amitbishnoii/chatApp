@@ -1,11 +1,17 @@
 import express from "express";
-import { addFriend, searchFriend, setupProfile } from "../controllers/user.controller.js";
+import {
+    addFriend,
+    getFriends,
+    searchUser,
+    setupProfile,
+} from "../controllers/user.controller.js";
 import upload from "../middlewares/upload.js";
 import { authMiddleware } from "../middlewares/authMiddleware.js";
 
 const userRouter = express.Router();
 
-userRouter.get("/u/:username", authMiddleware, searchFriend);
+userRouter.get("/u/:username", authMiddleware, searchUser);
+userRouter.get("/friends/:userId", authMiddleware, getFriends);
 userRouter.post(
     "/setup-profile",
     authMiddleware,

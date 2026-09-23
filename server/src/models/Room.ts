@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
-interface RoomShape extends mongoose.Document {
-    participants: mongoose.Schema.Types.ObjectId[];
+interface RoomShape {
+    participants: mongoose.Types.ObjectId[];
     createdAt: Date;
 }
 

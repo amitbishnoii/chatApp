@@ -90,20 +90,59 @@ export const addFriend = async (
     }
 };
 
-export const searchFriend = async (
+export const searchUser = async (
     req: Request,
     res: Response,
     next: NextFunction,
 ) => {
     try {
-        const username = req.body.username;
-        const exists = await User.findOne({ username: username });
+        const username = req.params.username;
+        if (!(typeof username === "string")) {
+            return;
+        }
+        const exists = await User.findOne({ username: username }).select(
+            "-password -role",
+        );
 
         if (!exists) {
             throw new AppError("User not found!", 404);
         }
 
         res.status(200).send({ user: exists, success: true });
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const getFriends = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) => {
+    try {
+        const userId = req.params.userId;
+        if (typeof userId !== "string") {
+            console.log("userid type: ", typeof userId);
+            throw new AppError("Invalid ID!", 400);
+        }
+        const friends = await FriendShip.find({
+            status: "accepted",
+            $or: [{ requester: userId }, { receiver: userId }],
+        })
+            .select("-password -role")
+            .populate(
+                "requester receiver",
+                "username firstName lastName profilePicture",
+            );
+        if (!friends) {
+            res.status(200).send({
+                message: "No friends Found!",
+                users: null,
+                success: true,
+            });
+            return;
+        }
+        res.status(200).send({ users: friends, success: true });
     } catch (error) {
         next(error);
     }

@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 
-interface MessageShape extends mongoose.Document {
+interface MessageShape {
     content: string;
     timeStamp: Date;
-    sender: mongoose.Schema.Types.ObjectId;
-    roomID: mongoose.Schema.Types.ObjectId;
+    sender: mongoose.Types.ObjectId;
+    roomID: mongoose.Types.ObjectId;
 }
 
 const messageSchema = new mongoose.Schema<MessageShape>({

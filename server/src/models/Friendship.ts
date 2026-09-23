@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
-interface FriendShipShape extends mongoose.Document {
-    requester: mongoose.Schema.Types.ObjectId;
-    receiver: mongoose.Schema.Types.ObjectId;
+interface FriendShipShape {
+    requester: mongoose.Types.ObjectId;
+    receiver: mongoose.Types.ObjectId;
     status: "pending" | "accepted" | "blocked";
 }
 
@@ -16,6 +16,9 @@ const FriendShipSchema = new mongoose.Schema<FriendShipShape>({
     },
 });
 
-const FriendShip = mongoose.model("FriendShip", FriendShipSchema);
+const FriendShip = mongoose.model<FriendShipShape>(
+    "FriendShip",
+    FriendShipSchema,
+);
 
 export default FriendShip;
