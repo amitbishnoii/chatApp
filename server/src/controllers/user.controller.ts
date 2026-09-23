@@ -142,7 +142,12 @@ export const getFriends = async (
             });
             return;
         }
-        res.status(200).send({ users: friends, success: true });
+        let newFriends = friends.map((obj) => {
+            return obj.requester._id.toString() === userId
+                ? obj.receiver
+                : obj.requester;
+        });
+        res.status(200).send({ users: newFriends, success: true });
     } catch (error) {
         next(error);
     }

@@ -1,6 +1,6 @@
 import type { FriendShape } from "./FriendSection";
 import MessageInput from "./MessageInput";
-import { MessageCircle, Sparkles, Users } from "lucide-react";
+import { MessageCircle, Sparkles, User, Users } from "lucide-react";
 
 const ChatWindow = ({ friend }: { friend: FriendShape | undefined }) => {
     if (!friend) {
@@ -28,8 +28,6 @@ const ChatWindow = ({ friend }: { friend: FriendShape | undefined }) => {
         );
     }
 
-    const initials = `${friend.firstName[0] ?? ""}${friend.lastName[0] ?? ""}`;
-
     return (
         <main className="fixed inset-y-5 left-98 right-5 flex flex-col overflow-hidden rounded-[1.75rem] border border-white/10 bg-[#0a0a0c] text-slate-100 shadow-[0_24px_80px_rgba(0,0,0,0.6)]">
             <header className="flex items-center gap-4 border-b border-white/10 bg-[#0f0f12] px-7 py-5">
@@ -42,7 +40,7 @@ const ChatWindow = ({ friend }: { friend: FriendShape | undefined }) => {
                         />
                     ) : (
                         <div className="grid size-12 place-items-center rounded-full bg-[#e6e6e6] text-sm font-bold text-black">
-                            {initials}
+                            <User className="size-6" strokeWidth={1.75} />
                         </div>
                     )}
                     <span className="absolute bottom-0 right-0 size-3.5 rounded-full border-2 border-[#0f0f12] bg-[#39ff88]" />
@@ -57,7 +55,7 @@ const ChatWindow = ({ friend }: { friend: FriendShape | undefined }) => {
                 </div>
             </header>
 
-            <section className="flex-1 overflow-y-auto bg-[#0a0a0c] px-7 py-7">
+            <section className="min-h-0 flex-1 overflow-y-auto bg-[#0a0a0c] px-7 py-7">
                 <div className="mx-auto flex max-w-3xl flex-col gap-4">
                     <div className="flex items-center gap-4 py-2 text-[10px] font-bold uppercase tracking-[0.25em] text-slate-600">
                         <span className="h-px flex-1 bg-white/10" />
@@ -92,9 +90,13 @@ const ChatWindow = ({ friend }: { friend: FriendShape | undefined }) => {
                             </div>
                         </div>
                     ))} */}
-                    <MessageInput />
                 </div>
             </section>
+            <div className="shrink-0 border-t border-white/10 bg-[#0f0f12] px-7 py-5">
+                <div className="mx-auto max-w-3xl">
+                    <MessageInput />
+                </div>
+            </div>
         </main>
     );
 };

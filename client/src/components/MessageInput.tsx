@@ -2,7 +2,7 @@ import { Paperclip, Plus, Send } from "lucide-react";
 
 const MessageInput = () => {
     return (
-        <div className="sticky bottom-0 mt-5 flex items-center gap-2 rounded-2xl border border-white/10 bg-[#20232f]/90 p-2 shadow-[0_16px_40px_rgba(0,0,0,0.28)] backdrop-blur-xl">
+        <div className="flex w-full items-center gap-2 rounded-2xl border border-white/10 bg-[#17171b] p-2 shadow-[0_16px_40px_rgba(0,0,0,0.28)]">
             <button
                 type="button"
                 aria-label="Add an attachment"

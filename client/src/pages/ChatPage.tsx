@@ -7,9 +7,6 @@ import useAuth from "../hooks/useAuth";
 import { fetchFriendsService } from "../services/userService";
 
 const ChatPage = () => {
-    const [message, setMessage] = useState<string>("");
-    const [chats, setChats] = useState<string[]>([]);
-    const [error, setError] = useState<string | null>(null);
     const [currentFriends, setCurrentFriends] = useState<FriendShape[]>([]);
     const [selectedFriend, setSelectedFriend] = useState<FriendShape>();
     const { user } = useAuth();
@@ -17,22 +14,17 @@ const ChatPage = () => {
 
     useEffect(() => {
         socket.connect();
-        socket.on("newMessage", (message) => {
-            setChats((prev) => [...prev, message]);
-        });
         socket.on("connect_error", (err) => {
             alert(err.message);
             Navigate({ to: "/login", replace: true });
         });
         return () => {
-            socket.off("newMessage");
             socket.disconnect();
         };
     }, []);
 
     useEffect(() => {
         if (!user) {
-            setError("Please Log-In!");
             navigate("/login", { replace: true });
             return;
         }
@@ -46,12 +38,8 @@ const ChatPage = () => {
         loadFriends();
     }, []);
 
-    const handleSend = () => {
-        socket.emit("sendMessage", message);
-    };
-
     return (
-        <div className="fixed inset-0 flex items-center justify-center gap-5 bg-[#170a0d] px-6">
+        <div className="relative inset-0 flex items-center justify-center gap-5 bg-[#170a0d] px-6">
             <FriendSection
                 selectedFriend={selectedFriend}
                 friends={currentFriends}
