@@ -11,6 +11,7 @@ const ChatPage = () => {
     const [chats, setChats] = useState<string[]>([]);
     const [error, setError] = useState<string | null>(null);
     const [currentFriends, setCurrentFriends] = useState<FriendShape[]>([]);
+    const [selectedFriend, setSelectedFriend] = useState<FriendShape>();
     const { user } = useAuth();
     const navigate = useNavigate();
 
@@ -51,8 +52,12 @@ const ChatPage = () => {
 
     return (
         <div className="fixed inset-0 flex items-center justify-center gap-5 bg-[#170a0d] px-6">
-            <FriendSection friends={currentFriends} />
-            <ChatWindow />
+            <FriendSection
+                selectedFriend={selectedFriend}
+                friends={currentFriends}
+                onSelect={setSelectedFriend}
+            />
+            <ChatWindow friend={selectedFriend} />
         </div>
     );
 };
