@@ -2,6 +2,7 @@ import { PlusIcon, SearchIcon, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export interface FriendShape {
+    _id: string;
     username: string;
     firstName: string;
     lastName: string;

@@ -1,8 +1,46 @@
+import type { Socket } from "socket.io-client";
 import type { FriendShape } from "./FriendSection";
 import MessageInput from "./MessageInput";
 import { MessageCircle, Sparkles, User, Users } from "lucide-react";
+import type {
+    ClientToServerEvents,
+    ServerToClientEvents,
+} from "../socket/socket";
+import { useEffect, useState } from "react";
 
-const ChatWindow = ({ friend }: { friend: FriendShape | undefined }) => {
+export interface MessageShape {
+    content: string;
+    timeStamp: Date;
+    sender: string;
+}
+
+const ChatWindow = ({
+    friend,
+    socket,
+}: {
+    friend: FriendShape | undefined;
+    socket: Socket<ServerToClientEvents, ClientToServerEvents>;
+}) => {
+    const [messages, setMessages] = useState<MessageShape[]>([]);
+
+    useEffect(() => {
+        const handleNewMessage = (message: MessageShape) => {
+            console.log(message);
+            setMessages((prev) => [...prev, message]);
+        };
+        socket.on("newMessage", handleNewMessage);
+    }, []);
+
+    const handleMessageSend = (msg: string) => {
+        if (msg.trim() === "") {
+            return;
+        }
+        if (!friend) {
+            return;
+        }
+        socket.emit("sendMessage", { message: msg, roomId: friend._id });
+    };
+
     if (!friend) {
         return (
             <main className="fixed inset-y-5 left-98 right-5 flex flex-col items-center justify-center overflow-hidden rounded-[1.75rem] border border-white/10 bg-[#0a0a0c] px-8 text-center text-slate-100 shadow-[0_24px_80px_rgba(0,0,0,0.6)]">
@@ -62,39 +100,11 @@ const ChatWindow = ({ friend }: { friend: FriendShape | undefined }) => {
                         <span>Today</span>
                         <span className="h-px flex-1 bg-white/10" />
                     </div>
-
-                    {/* {messages.map((message) => (
-                        <div
-                            key={`${message.time}-${message.text}`}
-                            className={`flex ${message.incoming ? "justify-start" : "justify-end"}`}
-                        >
-                            <div
-                                className={`max-w-[min(75%,34rem)] px-4 py-3 ${
-                                    message.incoming
-                                        ? "rounded-2xl rounded-tl-md border border-white/10 bg-[#17171b] text-slate-100"
-                                        : "rounded-2xl rounded-tr-md bg-[#ff2e55] text-white"
-                                }`}
-                            >
-                                <p className="text-sm leading-6">
-                                    {message.text}
-                                </p>
-                                <p
-                                    className={`mt-1.5 text-[10px] font-semibold tracking-wide ${
-                                        message.incoming
-                                            ? "text-slate-600"
-                                            : "text-white/70"
-                                    }`}
-                                >
-                                    {message.time}
-                                </p>
-                            </div>
-                        </div>
-                    ))} */}
                 </div>
             </section>
             <div className="shrink-0 border-t border-white/10 bg-[#0f0f12] px-7 py-5">
                 <div className="mx-auto max-w-3xl">
-                    <MessageInput />
+                    <MessageInput onSend={handleMessageSend} />
                 </div>
             </div>
         </main>

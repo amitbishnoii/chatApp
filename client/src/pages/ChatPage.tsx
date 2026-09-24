@@ -45,7 +45,7 @@ const ChatPage = () => {
                 friends={currentFriends}
                 onSelect={setSelectedFriend}
             />
-            <ChatWindow friend={selectedFriend} />
+            <ChatWindow socket={socket} friend={selectedFriend} />
         </div>
     );
 };
