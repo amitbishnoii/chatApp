@@ -132,7 +132,7 @@ export const getFriends = async (
             .select("-password -role")
             .populate(
                 "requester receiver",
-                "username firstName lastName profilePicture",
+                "_id username firstName lastName profilePicture",
             );
         if (!friends) {
             res.status(200).send({

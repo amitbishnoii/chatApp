@@ -5,7 +5,13 @@ import jwt from "jsonwebtoken";
 import config from "../config/envConfig.js";
 
 export interface ClientToServerEvents {
-    sendMessage: (message: string) => void;
+    sendMessage: ({
+        message,
+        roomId,
+    }: {
+        message: string;
+        roomId: string;
+    }) => void;
 }
 
 export interface ServerToClientEvents {
