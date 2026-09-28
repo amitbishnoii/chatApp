@@ -7,15 +7,19 @@ import config from "../config/envConfig.js";
 export interface ClientToServerEvents {
     sendMessage: ({
         message,
-        roomId,
+        receiverID,
     }: {
         message: string;
-        roomId: string;
+        receiverID: string;
     }) => void;
 }
 
 export interface ServerToClientEvents {
-    newMessage: (message: string) => void;
+    newMessage: (message: {
+        content: string;
+        timeStamp: Date;
+        sender: string;
+    }) => void;
 }
 
 let io: Server<ClientToServerEvents, ServerToClientEvents>;
