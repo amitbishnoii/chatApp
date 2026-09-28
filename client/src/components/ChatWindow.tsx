@@ -38,7 +38,7 @@ const ChatWindow = ({
         if (!friend) {
             return;
         }
-        socket.emit("sendMessage", { message: msg, roomId: friend._id });
+        socket.emit("sendMessage", { message: msg, receiverID: friend._id });
     };
 
     if (!friend) {
