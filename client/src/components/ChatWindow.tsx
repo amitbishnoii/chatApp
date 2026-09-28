@@ -7,6 +7,8 @@ import type {
     ServerToClientEvents,
 } from "../socket/socket";
 import { useEffect, useState } from "react";
+import BubbleText from "./BubbleText";
+import useAuth from "../hooks/useAuth";
 
 export interface MessageShape {
     content: string;
@@ -22,6 +24,7 @@ const ChatWindow = ({
     socket: Socket<ServerToClientEvents, ClientToServerEvents>;
 }) => {
     const [messages, setMessages] = useState<MessageShape[]>([]);
+    const { user } = useAuth();
 
     useEffect(() => {
         const handleNewMessage = (message: MessageShape) => {
@@ -32,12 +35,18 @@ const ChatWindow = ({
     }, []);
 
     const handleMessageSend = (msg: string) => {
-        if (msg.trim() === "") {
+        if (msg.trim() === "" || !friend || !user) {
             return;
         }
-        if (!friend) {
-            return;
-        }
+
+        setMessages((prev) => [
+            ...prev,
+            {
+                content: msg,
+                sender: user.id,
+                timeStamp: new Date(),
+            },
+        ]);
         socket.emit("sendMessage", { message: msg, receiverID: friend._id });
     };
 
@@ -93,12 +102,58 @@ const ChatWindow = ({
                 </div>
             </header>
 
-            <section className="min-h-0 flex-1 overflow-y-auto bg-[#0a0a0c] px-7 py-7">
-                <div className="mx-auto flex max-w-3xl flex-col gap-4">
+            <section className="min-h-0 flex-1 overflow-y-auto bg-[#0a0a0c] px-5 py-7 sm:px-7">
+                <div className="mx-auto flex max-w-3xl flex-col gap-5">
                     <div className="flex items-center gap-4 py-2 text-[10px] font-bold uppercase tracking-[0.25em] text-slate-600">
-                        <span className="h-px flex-1 bg-white/10" />
-                        <span>Today</span>
-                        <span className="h-px flex-1 bg-white/10" />
+                        <span className="h-px flex-1 bg-white/8" />
+                        <span>
+                            {messages.length ? "Today" : "A little love story"}
+                        </span>
+                        <span className="h-px flex-1 bg-white/8" />
+                    </div>
+                    <div className="flex flex-col gap-3">
+                        {(messages.length > 0
+                            ? messages
+                            : [
+                                  {
+                                      content:
+                                          "I was going to say hi earlier, but then you looked at me and my brain just... left.",
+                                      sender: user?.id ?? "",
+                                      timeStamp: new Date(
+                                          Date.now() - 1000 * 60 * 12,
+                                      ),
+                                  },
+                                  {
+                                      content:
+                                          "You? Speechless? I need to remember this moment forever.",
+                                      sender: friend._id,
+                                      timeStamp: new Date(
+                                          Date.now() - 1000 * 60 * 11,
+                                      ),
+                                  },
+                                  {
+                                      content:
+                                          "Please don't. I have a reputation to protect.",
+                                      sender: user?.id ?? "",
+                                      timeStamp: new Date(
+                                          Date.now() - 1000 * 60 * 10,
+                                      ),
+                                  },
+                                  {
+                                      content:
+                                          "Relax, shy boy. Your secret's safe with me. Probably. 😉",
+                                      sender: friend._id,
+                                      timeStamp: new Date(
+                                          Date.now() - 1000 * 60 * 9,
+                                      ),
+                                  },
+                              ]
+                        ).map((msg, index) => (
+                            <BubbleText
+                                key={`${msg.sender}-${index}`}
+                                message={msg}
+                            />
+                        ))}
                     </div>
                 </div>
             </section>

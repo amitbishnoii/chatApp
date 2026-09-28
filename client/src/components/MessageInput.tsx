@@ -33,7 +33,10 @@ const MessageInput = ({ onSend }: { onSend: (text: string) => void }) => {
             <button
                 type="button"
                 aria-label="Send message"
-                onClick={() => onSend(messageOutput)}
+                onClick={() => {
+                    onSend(messageOutput);
+                    setMessageOutput("");
+                }}
                 className="grid size-10 shrink-0 place-items-center rounded-xl bg-[#ff6480] text-white shadow-lg shadow-[#ff6480]/20 transition hover:-translate-y-0.5 hover:bg-[#ff4d6d] focus:outline-none focus:ring-2 focus:ring-[#ff6480]/60"
             >
                 <Send size={17} fill="currentColor" />
