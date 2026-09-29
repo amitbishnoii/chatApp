@@ -1,8 +1,15 @@
 import { Paperclip, Plus, Send } from "lucide-react";
-import { useState } from "react";
+import React, { useState } from "react";
 
 const MessageInput = ({ onSend }: { onSend: (text: string) => void }) => {
     const [messageOutput, setMessageOutput] = useState<string>("");
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
+            onSend(messageOutput);
+            setMessageOutput("");
+        }
+    };
 
     return (
         <div className="flex w-full items-center gap-2 rounded-2xl border border-white/10 bg-[#17171b] p-2 shadow-[0_16px_40px_rgba(0,0,0,0.28)]">
@@ -19,6 +26,7 @@ const MessageInput = ({ onSend }: { onSend: (text: string) => void }) => {
                     placeholder="Write a message..."
                     value={messageOutput}
                     onChange={(e) => setMessageOutput(e.target.value)}
+                    onKeyDown={handleKeyDown}
                     aria-label="Message"
                     className="w-full bg-transparent px-2 py-2 text-sm text-slate-100 outline-none placeholder:text-slate-500"
                 />

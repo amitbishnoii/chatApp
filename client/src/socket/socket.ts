@@ -4,11 +4,15 @@ import type { MessageShape } from "../components/ChatWindow";
 export interface ClientToServerEvents {
     sendMessage: ({
         message,
-        receiverID,
+        roomID,
     }: {
         message: string;
-        receiverID: string;
+        roomID: string;
     }) => void;
+    joinRoom: (
+        data: { receiverID: string },
+        callback: (res: { roomID: string }) => void,
+    ) => void;
 }
 
 export interface ServerToClientEvents {

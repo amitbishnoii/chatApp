@@ -24,6 +24,7 @@ const ChatWindow = ({
     socket: Socket<ServerToClientEvents, ClientToServerEvents>;
 }) => {
     const [messages, setMessages] = useState<MessageShape[]>([]);
+    const [roomId, setRoomId] = useState<string>("");
     const { user } = useAuth();
 
     useEffect(() => {
@@ -33,6 +34,15 @@ const ChatWindow = ({
         };
         socket.on("newMessage", handleNewMessage);
     }, []);
+
+    useEffect(() => {
+        if (!friend) {
+            return;
+        }
+        socket.emit("joinRoom", { receiverID: friend._id }, (res) => {
+            setRoomId(res.roomID);
+        });
+    }, [friend]);
 
     const handleMessageSend = (msg: string) => {
         if (msg.trim() === "" || !friend || !user) {
@@ -47,7 +57,7 @@ const ChatWindow = ({
                 timeStamp: new Date(),
             },
         ]);
-        socket.emit("sendMessage", { message: msg, receiverID: friend._id });
+        socket.emit("sendMessage", { message: msg, roomID: roomId });
     };
 
     if (!friend) {
@@ -106,49 +116,11 @@ const ChatWindow = ({
                 <div className="mx-auto flex max-w-3xl flex-col gap-5">
                     <div className="flex items-center gap-4 py-2 text-[10px] font-bold uppercase tracking-[0.25em] text-slate-600">
                         <span className="h-px flex-1 bg-white/8" />
-                        <span>
-                            {messages.length ? "Today" : "A little love story"}
-                        </span>
+                        <span>Today</span>
                         <span className="h-px flex-1 bg-white/8" />
                     </div>
                     <div className="flex flex-col gap-3">
-                        {(messages.length > 0
-                            ? messages
-                            : [
-                                  {
-                                      content:
-                                          "I was going to say hi earlier, but then you looked at me and my brain just... left.",
-                                      sender: user?.id ?? "",
-                                      timeStamp: new Date(
-                                          Date.now() - 1000 * 60 * 12,
-                                      ),
-                                  },
-                                  {
-                                      content:
-                                          "You? Speechless? I need to remember this moment forever.",
-                                      sender: friend._id,
-                                      timeStamp: new Date(
-                                          Date.now() - 1000 * 60 * 11,
-                                      ),
-                                  },
-                                  {
-                                      content:
-                                          "Please don't. I have a reputation to protect.",
-                                      sender: user?.id ?? "",
-                                      timeStamp: new Date(
-                                          Date.now() - 1000 * 60 * 10,
-                                      ),
-                                  },
-                                  {
-                                      content:
-                                          "Relax, shy boy. Your secret's safe with me. Probably. 😉",
-                                      sender: friend._id,
-                                      timeStamp: new Date(
-                                          Date.now() - 1000 * 60 * 9,
-                                      ),
-                                  },
-                              ]
-                        ).map((msg, index) => (
+                        {messages.map((msg, index) => (
                             <BubbleText
                                 key={`${msg.sender}-${index}`}
                                 message={msg}
