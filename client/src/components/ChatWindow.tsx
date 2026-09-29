@@ -9,6 +9,7 @@ import type {
 import { useEffect, useState } from "react";
 import BubbleText from "./BubbleText";
 import useAuth from "../hooks/useAuth";
+import { fetchMessages } from "../services/messageService";
 
 export interface MessageShape {
     content: string;
@@ -36,12 +37,19 @@ const ChatWindow = ({
     }, []);
 
     useEffect(() => {
-        if (!friend) {
+        if (!friend || !user) {
             return;
         }
         socket.emit("joinRoom", { receiverID: friend._id }, (res) => {
             setRoomId(res.roomID);
         });
+        const getMessages = async () => {
+            const messagesResponse = await fetchMessages(
+                roomId,
+                user.accessToken,
+            );
+        };
+        getMessages();
     }, [friend]);
 
     const handleMessageSend = (msg: string) => {
