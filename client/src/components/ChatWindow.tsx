@@ -25,7 +25,7 @@ const ChatWindow = ({
     socket: Socket<ServerToClientEvents, ClientToServerEvents>;
 }) => {
     const [messages, setMessages] = useState<MessageShape[]>([]);
-    const [roomId, setRoomId] = useState<string>("");
+    const [roomId, setRoomId] = useState<string | null>(null);
     const { user } = useAuth();
 
     useEffect(() => {
@@ -37,23 +37,27 @@ const ChatWindow = ({
     }, []);
 
     useEffect(() => {
-        if (!friend || !user) {
+        if (!friend) {
             return;
         }
         socket.emit("joinRoom", { receiverID: friend._id }, (res) => {
             setRoomId(res.roomID);
+            const getMessages = async () => {
+                if (!user || !roomId) {
+                    return;
+                }
+                const messagesResponse = await fetchMessages(
+                    res.roomID,
+                    user.accessToken,
+                );
+                setMessages((prev) => [...prev, ...messagesResponse]);
+            };
+            getMessages();
         });
-        const getMessages = async () => {
-            const messagesResponse = await fetchMessages(
-                roomId,
-                user.accessToken,
-            );
-        };
-        getMessages();
     }, [friend]);
 
     const handleMessageSend = (msg: string) => {
-        if (msg.trim() === "" || !friend || !user) {
+        if (msg.trim() === "" || !user) {
             return;
         }
 
@@ -65,6 +69,7 @@ const ChatWindow = ({
                 timeStamp: new Date(),
             },
         ]);
+        if (!roomId) return;
         socket.emit("sendMessage", { message: msg, roomID: roomId });
     };
 

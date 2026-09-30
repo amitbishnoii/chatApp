@@ -7,10 +7,11 @@ const messageApi = axios.create({
 
 export const fetchMessages = async (roomID: string, accessToken: string) => {
     try {
+        console.log("roomid: ", roomID);
         const response = await messageApi.get(`/get/${roomID}`, {
             headers: { Authorization: `Bearer ${accessToken}` },
         });
-        console.log("response: ", response);
+        return response.data.data;
     } catch (error) {
         return handleError(error);
     }
