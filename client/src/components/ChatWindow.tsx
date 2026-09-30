@@ -1,15 +1,16 @@
 import type { Socket } from "socket.io-client";
 import type { FriendShape } from "./FriendSection";
 import MessageInput from "./MessageInput";
-import { MessageCircle, Sparkles, User, Users } from "lucide-react";
+import { MessageCircle, MouseOff, Sparkles, User, Users } from "lucide-react";
 import type {
     ClientToServerEvents,
     ServerToClientEvents,
 } from "../socket/socket";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import BubbleText from "./BubbleText";
 import useAuth from "../hooks/useAuth";
 import { fetchMessages } from "../services/messageService";
+import DateDivider from "./DateDivider";
 
 export interface MessageShape {
     content: string;
@@ -27,6 +28,7 @@ const ChatWindow = ({
     const [messages, setMessages] = useState<MessageShape[]>([]);
     const [roomId, setRoomId] = useState<string | null>(null);
     const { user } = useAuth();
+    const sentinalDivRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
         const handleNewMessage = (message: MessageShape) => {
@@ -43,24 +45,27 @@ const ChatWindow = ({
         socket.emit("joinRoom", { receiverID: friend._id }, (res) => {
             setRoomId(res.roomID);
             const getMessages = async () => {
-                if (!user || !roomId) {
+                if (!user) {
                     return;
                 }
                 const messagesResponse = await fetchMessages(
                     res.roomID,
                     user.accessToken,
                 );
-                setMessages((prev) => [...prev, ...messagesResponse]);
+                setMessages(messagesResponse);
             };
             getMessages();
         });
     }, [friend]);
 
+    useEffect(() => {
+        sentinalDivRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [messages]);
+
     const handleMessageSend = (msg: string) => {
         if (msg.trim() === "" || !user) {
             return;
         }
-
         setMessages((prev) => [
             ...prev,
             {
@@ -71,6 +76,16 @@ const ChatWindow = ({
         ]);
         if (!roomId) return;
         socket.emit("sendMessage", { message: msg, roomID: roomId });
+    };
+
+    const isSameDay = (a: Date, b: Date) => {
+        const dateA = new Date(a);
+        const dateB = new Date(b);
+        return (
+            dateA.getFullYear() === dateB.getFullYear() &&
+            dateA.getMonth() === dateB.getMonth() &&
+            dateA.getDate() === dateB.getDate()
+        );
     };
 
     if (!friend) {
@@ -125,20 +140,27 @@ const ChatWindow = ({
                 </div>
             </header>
 
-            <section className="min-h-0 flex-1 overflow-y-auto bg-[#0a0a0c] px-5 py-7 sm:px-7">
+            <section className="[scrollbar-color:#3f3f46_#0a0a0c] scrollbar-thin [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-[#0a0a0c] [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-[#3f3f46] [&::-webkit-scrollbar-thumb:hover]:bg-[#52525b] min-h-0 flex-1 overflow-y-auto bg-[#0a0a0c] px-5 py-7 sm:px-7">
                 <div className="mx-auto flex max-w-3xl flex-col gap-5">
-                    <div className="flex items-center gap-4 py-2 text-[10px] font-bold uppercase tracking-[0.25em] text-slate-600">
-                        <span className="h-px flex-1 bg-white/8" />
-                        <span>Today</span>
-                        <span className="h-px flex-1 bg-white/8" />
-                    </div>
                     <div className="flex flex-col gap-3">
-                        {messages.map((msg, index) => (
-                            <BubbleText
-                                key={`${msg.sender}-${index}`}
-                                message={msg}
-                            />
-                        ))}
+                        {messages.map((msg, index) => {
+                            const prevMsg = messages[index - 1];
+                            const showDivider =
+                                !prevMsg ||
+                                !isSameDay(msg.timeStamp, prevMsg.timeStamp);
+                            return (
+                                <Fragment key={`${msg.content}_${index}`}>
+                                    {showDivider && (
+                                        <DateDivider date={msg.timeStamp} />
+                                    )}
+                                    <BubbleText
+                                        key={`${msg.sender}-${index}`}
+                                        message={msg}
+                                    />
+                                </Fragment>
+                            );
+                        })}
+                        <div ref={sentinalDivRef} />
                     </div>
                 </div>
             </section>

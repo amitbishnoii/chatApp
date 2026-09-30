@@ -56,7 +56,7 @@ const FriendSection = ({
                 </div>
             </div>
 
-            <div className="flex-1 space-y-1.5 overflow-y-auto p-3">
+            <div className="[scrollbar-color:#3f3f46_#0a0a0c] scrollbar-thin [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-[#0a0a0c] [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-[#3f3f46] [&::-webkit-scrollbar-thumb:hover]:bg-[#52525b] flex-1 space-y-1.5 overflow-y-auto p-3">
                 <p className="px-3 pb-1 pt-1 text-[10px] font-bold uppercase tracking-[0.25em] text-[#ff6480]/80">
                     Recent conversations
                 </p>

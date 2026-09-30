@@ -5,7 +5,7 @@ const BubbleText = ({ message }: { message: MessageShape }) => {
     const { user } = useAuth();
     const isOwnMessage = user?.id === message.sender;
     const time = new Date(message.timeStamp).toLocaleTimeString([], {
-        hour: "numeric",
+        hour: "2-digit",
         minute: "2-digit",
     });
 
