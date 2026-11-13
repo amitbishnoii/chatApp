@@ -10,7 +10,7 @@ const SetupProfile = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>("");
     const navigate = useNavigate();
-    const { setupPartialData } = useAuth();
+    const { user, setupPartialData } = useAuth();
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (!e.target.files) {
@@ -28,16 +28,14 @@ const SetupProfile = () => {
         payload.append("profilePicture", profilePicture!);
         payload.append("bio", bio);
         setLoading(true);
-        const setupRes = await setupService(
-            payload,
-            localStorage.getItem("token")!,
-        );
+        if (!user) return;
+        const setupRes = await setupService(payload, user.accessToken);
         setLoading(false);
         if (setupRes.success) {
             setupPartialData({
                 bio: setupRes.user.bio,
                 firstName: setupRes.user.firstName,
-                lastName: setupRes.user.firstName,
+                lastName: setupRes.user.lastName,
             });
             navigate("/chat");
         } else {

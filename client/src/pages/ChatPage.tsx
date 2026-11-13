@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { socket } from "../socket/socket";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import FriendSection, { type FriendShape } from "../components/FriendSection";
 import ChatWindow from "../components/ChatWindow";
 import useAuth from "../hooks/useAuth";

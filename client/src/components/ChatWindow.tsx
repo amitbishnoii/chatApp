@@ -36,6 +36,10 @@ const ChatWindow = ({
             setMessages((prev) => [...prev, message]);
         };
         socket.on("newMessage", handleNewMessage);
+
+        return () => {
+            socket.off("newMessage", handleNewMessage);
+        };
     }, []);
 
     useEffect(() => {
