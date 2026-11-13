@@ -1,7 +1,7 @@
 import type { Socket } from "socket.io-client";
 import type { FriendShape } from "./FriendSection";
 import MessageInput from "./MessageInput";
-import { MessageCircle, MouseOff, Sparkles, User, Users } from "lucide-react";
+import { MessageCircle, Sparkles, User, Users } from "lucide-react";
 import type {
     ClientToServerEvents,
     ServerToClientEvents,

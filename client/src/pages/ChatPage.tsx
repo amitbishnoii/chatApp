@@ -9,14 +9,14 @@ import { fetchFriendsService } from "../services/userService";
 const ChatPage = () => {
     const [currentFriends, setCurrentFriends] = useState<FriendShape[]>([]);
     const [selectedFriend, setSelectedFriend] = useState<FriendShape>();
-    const { user } = useAuth();
+    const { user, isLoading } = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
         socket.connect();
         socket.on("connect_error", (err) => {
             alert(err.message);
-            Navigate({ to: "/login", replace: true });
+            navigate("/login", { replace: true });
         });
         return () => {
             socket.disconnect();
@@ -24,6 +24,7 @@ const ChatPage = () => {
     }, []);
 
     useEffect(() => {
+        if (isLoading) return;
         if (!user) {
             navigate("/login", { replace: true });
             return;
@@ -36,7 +37,7 @@ const ChatPage = () => {
             setCurrentFriends(friends);
         };
         loadFriends();
-    }, []);
+    }, [isLoading, user]);
 
     return (
         <div className="relative inset-0 flex items-center justify-center gap-5 bg-[#170a0d] px-6">

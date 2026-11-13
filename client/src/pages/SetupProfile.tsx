@@ -60,7 +60,7 @@ const SetupProfile = () => {
                             </div>
                             <div>
                                 <p className="text-xs uppercase tracking-[0.22em] text-violet-200/75">
-                                    Chat AI
+                                    Chat App
                                 </p>
                                 <p className="text-sm text-slate-300">
                                     Profile setup

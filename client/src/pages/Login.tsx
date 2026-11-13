@@ -129,7 +129,7 @@ const Login = () => {
                     </div>
 
                     <div className="mt-3 text-center text-sm text-[#849089]">
-                        New to ChatAI?
+                        New?
                         <Link
                             to="/signup"
                             className="font-semibold text-emerald-400 transition hover:text-emerald-300"
@@ -137,10 +137,6 @@ const Login = () => {
                             Create an account
                         </Link>
                     </div>
-
-                    <p className="mt-4 text-center text-xs text-[#657068]">
-                        Secure, private, and powered by AI
-                    </p>
                 </section>
             </div>
         </main>
